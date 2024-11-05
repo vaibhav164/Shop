@@ -14,10 +14,12 @@ export default function Container(props:ContainerProps) {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     };
     return (
-        <SafeAreaView style={[{ backgroundColor: '#fff', flex: 1, justifyContent: 'center', alignItems: 'center' }]}>
+        <SafeAreaView style={[{ backgroundColor: '#fff', flex: 1}]}>
             <StatusBar
+                backgroundColor="transparent" 
+                translucent={true} 
                 barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-                backgroundColor={'#fff'}
+
             />
             {children}
         </SafeAreaView>
