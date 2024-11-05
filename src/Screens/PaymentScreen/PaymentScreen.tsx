@@ -1,10 +1,16 @@
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import React from 'react'
-
-export default function PaymentScreen() {
+interface PaymentScreen {
+  navigation: any
+}
+export default function PaymentScreen({navigation}:PaymentScreen) {
   return (
     <View>
       <Text>PaymentScreen</Text>
+      <Button
+        title="Go to CartScreen"
+        onPress={() => navigation.navigate('CartScreen')}
+      />
     </View>
   )
 }
