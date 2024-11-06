@@ -1,3 +1,5 @@
+import { Dimensions } from "react-native";
+// https://fakestoreapi.com/products
 export const itemList = [{
     "id": 1,
     "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
@@ -219,3 +221,20 @@ export const itemList = [{
       "count": 145
     }
   }]
+
+ export const NeighbourHoodItemsList = [
+    { id: '1', name: 'Item 1', imageUrl: 'https://picsum.photos/200/300' },
+    { id: '2', name: 'Item 2', imageUrl: 'https://picsum.photos/200/300' },
+    { id: '3', name: 'Item 3', imageUrl: 'https://picsum.photos/200/300' },
+    { id: '4', name: 'Item 4', imageUrl: 'https://picsum.photos/200/300' },
+    { id: '5', name: 'Item 5', imageUrl: 'https://picsum.photos/200/300' },
+    // Add more items as needed
+  ];
+  export const Module = [
+    {id: '1', image: '../../Assets/images/Food.png',title:'Food'},
+    {id: '2', image: '../../Assets/images/exclusive.jpeg',title:'Exclusive'},
+    {id: '3', image: '../../Assets/images/payment.jpg',title:'Payment'},
+    {id: '3', image: '../../Assets/images/stores.jpeg',title:'Store'},
+  ];
+  export const ScreenWidth = Dimensions.get('window').width;
+export const ScreenHeight = Dimensions.get('window').height;
