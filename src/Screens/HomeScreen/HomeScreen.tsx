@@ -15,7 +15,7 @@ import Carousel from 'react-native-reanimated-carousel';
 import Container from '../../Components/Container/Container';
 import {itemList, ScreenHeight, ScreenWidth} from '../../Utils/Constant';
 import {Module} from '../../Utils/Constant';
-import SearchInput from '../../Components/TextInput/TextInput';
+import SearchInput from '../../Components/SearchTextInput/SearchTextInput';
 import NeighbourHoodItems from '../../Components/NeighbourHoodSpecial/NeighbourHoodItems';
 const {width: viewportWidth} = Dimensions.get('window');
 const banners = [
