@@ -129,7 +129,7 @@ const HomeScreen = ({navigation}: HomScreenProps) => {
           <SearchInput  onFocus={()=>{navigation.navigate('Search')}}/>
           <NeighbourHoodItems />
           <FlatList
-            data={itemList}
+            data={[...itemList].reverse()}
             renderItem={renderProductItem}
             keyExtractor={item => item.id}
             horizontal
@@ -145,7 +145,7 @@ const HomeScreen = ({navigation}: HomScreenProps) => {
             contentContainerStyle={styles.productList}
           />
           <FlatList
-            data={itemList}
+            data={[...itemList].reverse()}
             renderItem={renderProductItem}
             keyExtractor={item => item.id}
             horizontal
