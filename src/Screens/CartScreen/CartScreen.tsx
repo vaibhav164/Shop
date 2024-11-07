@@ -29,7 +29,7 @@ const CartScreen = () => {
 
   const decreaseQuantity = (id) => {
     const updatedCart = cartItems.map(item => 
-      item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+      item.id === id && item.quantity > 0 ? { ...item, quantity: item.quantity - 1 } : item
     );
     setCartItems(updatedCart);
   };
@@ -69,7 +69,7 @@ const CartScreen = () => {
                   <TouchableOpacity onPress={() => decreaseQuantity(item.id)} style={styles.quantityButton}>
                     <Text style={styles.quantityText}>-</Text>
                   </TouchableOpacity>
-                  <Text style={styles.quantityText}>{item.quantity}</Text>
+                  <Text style={[styles.quantityText,{color:'#000'}]}>{item.quantity}</Text>
                   <TouchableOpacity onPress={() => increaseQuantity(item.id)} style={styles.quantityButton}>
                     <Text style={styles.quantityText}>+</Text>
                   </TouchableOpacity>
