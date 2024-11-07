@@ -1,21 +1,39 @@
-import { View, Text, Button, Image, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
-import React,{useState} from 'react'
+import {
+  View,
+  Text,
+  Button,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
+  Pressable,
+} from 'react-native';
+import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {ScreenWidth} from '../../Utils/Constant';
+import Carousel from 'react-native-reanimated-carousel';
 interface ProductDetailScreenProps {
   navigation: any;
-  route: any
+  route: any;
 }
-export default function ProductDetailScreen({route, navigation}: ProductDetailScreenProps) {
-  const { product } = route.params; 
-  const [isExpanded, setIsExpanded] = useState(false); 
+export default function ProductDetailScreen({
+  route,
+  navigation,
+}: ProductDetailScreenProps) {
+  const {product} = route.params;
+  const [isExpanded, setIsExpanded] = useState(false);
   const [quantity, setQuantity] = useState(0);
 
   const handleAddToCart = () => {
-    navigation.navigate('CartScreen',{quantity:quantity, product:product.name})
+    navigation.navigate('CartScreen', {
+      quantity: quantity,
+      product: product.name,
+    });
     console.log(`Added ${quantity} of ${product.name} to the cart`);
   };
   const toggleText = () => {
-    setIsExpanded(!isExpanded); 
+    setIsExpanded(!isExpanded);
   };
   const increaseQuantity = () => {
     setQuantity(prev => prev + 1);
@@ -26,37 +44,74 @@ export default function ProductDetailScreen({route, navigation}: ProductDetailSc
       setQuantity(prev => prev - 1);
     }
   };
+  const renderBannerItem = ({item}) => (
+    <Image source={{uri: item}} style={styles.productImage} />
+  );
   return (
-    <SafeAreaView style={{flex:1, paddingTop:'10%', backgroundColor:'#fff'}}>
-       <Icon onPress={()=>navigation.goBack()} name="arrow-back" size={20} color="#aaa" style={{color:'black', marginLeft:'5%'}} />
-      <Image source={{ uri: product.image }} style={styles.productImage} />
-
-      <View style={styles.productDetails}>
+    <SafeAreaView style={{flex: 1, paddingTop: '10%', backgroundColor: '#fff'}}>
+      <Pressable onPress={() => navigation.goBack()} style={{padding: '5%'}}>
+        <Icon
+          onPress={() => navigation.goBack()}
+          name="arrow-back"
+          size={20}
+          color="#aaa"
+          style={{color: 'black'}}
+        />
+      </Pressable>
+      <Carousel
+        loop
+        width={ScreenWidth}
+        autoPlay={false}
+        data={[product.image, product.image, product.image]}
+        scrollAnimationDuration={1000}
+        onSnapToItem={index => console.log('current index:', index)}
+        renderItem={renderBannerItem}
+        style={{flex: 1}}
+      />
+      <View style={{paddingHorizontal: '6%'}}>
         <Text style={styles.productTitle}>{product.title}</Text>
-        <Text style={styles.productPrice}>${product.price}</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <Text style={styles.productPrice}>${product.price}</Text>
+          <View style={styles.quantityContainer}>
+            <TouchableOpacity
+              onPress={decreaseQuantity}
+              style={styles.quantityButton}>
+              <Text style={styles.quantityButtonText}>-</Text>
+            </TouchableOpacity>
 
-        <Text style={styles.productDescription}>
-          {isExpanded ? product.description : `${product.description.slice(0, 100)}...`} 
-          <Text onPress={toggleText} style={styles.toggleButton}>
-          {isExpanded ? 'View Less' : 'View More'}
-        </Text>
-        </Text>
-        <View style={styles.quantityContainer}>
-          <TouchableOpacity onPress={decreaseQuantity} style={styles.quantityButton}>
-            <Text style={styles.quantityButtonText}>-</Text>
-          </TouchableOpacity>
+            <Text style={styles.quantityText}>{quantity}</Text>
 
-          <Text style={styles.quantityText}>{quantity}</Text>
-
-          <TouchableOpacity onPress={increaseQuantity} style={styles.quantityButton}>
-            <Text style={styles.quantityButtonText}>+</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={increaseQuantity}
+              style={styles.quantityButton}>
+              <Text style={styles.quantityButtonText}>+</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-
-        <Button title="Add to Cart" onPress={handleAddToCart} />
       </View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.productDetails}>
+        <View>
+          <Text style={styles.productDescription}>
+            {isExpanded
+              ? product.description
+              : `${product.description.slice(0, 100)}...`}
+            <Text onPress={toggleText} style={styles.toggleButton}>
+              {isExpanded ? 'View Less' : 'View More'}
+            </Text>
+          </Text>
+
+          <Button title="Add to Cart" onPress={handleAddToCart} />
+        </View>
+      </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
 const styles = StyleSheet.create({
   container: {
@@ -66,13 +121,15 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: '100%',
-    height: 300,
+    height: '100%',
     resizeMode: 'contain',
     borderRadius: 10,
   },
   productDetails: {
     marginTop: 20,
-    paddingHorizontal:'5%'
+    paddingHorizontal: '5%',
+    height: ScreenWidth,
+    flex: 1,
   },
   productTitle: {
     fontSize: 24,
