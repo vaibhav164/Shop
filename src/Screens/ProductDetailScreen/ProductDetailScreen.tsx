@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  Button,
   Image,
   StyleSheet,
   TouchableOpacity,
@@ -13,6 +12,7 @@ import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {ScreenWidth} from '../../Utils/Constant';
 import Carousel from 'react-native-reanimated-carousel';
+import ShopButton from '../../Components/Button/Button';
 interface ProductDetailScreenProps {
   navigation: any;
   route: any;
@@ -106,8 +106,7 @@ export default function ProductDetailScreen({
               {isExpanded ? 'View Less' : 'View More'}
             </Text>
           </Text>
-
-          <Button title="Add to Cart" onPress={handleAddToCart} />
+          <ShopButton title="Add to Cart" onPress={handleAddToCart} />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -63,7 +63,7 @@ const CartScreen = () => {
               <Image source={{ uri: item.image }} style={styles.productImage} />
               <View style={styles.itemDetails}>
                 <Text style={styles.productName}>{item.name}</Text>
-                <Text style={styles.productPrice}>${item.price}</Text>
+                <Text style={styles..price}</Text>
                 <View style={styles.quantityContainer}>
                   <TouchableOpacity onPress={() => decreaseQuantity(item.id)} style={styles.quantityButton}>
                     <Text style={styles.quantityText}>-</Text>
@@ -96,11 +96,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F9F9F9',
-    padding: ScreenWidth * 0.04, // Padding is now responsive
+    padding: ScreenWidth * 0.04, 
     paddingTop:'10%'
   },
   emptyCartText: {
-    fontSize: ScreenWidth * 0.05, // Responsive font size
+    fontSize: ScreenWidth * 0.05,
     color: '#444',
     textAlign: 'center',
     marginTop: ScreenHeight * 0.1,
@@ -108,65 +108,65 @@ const styles = StyleSheet.create({
   cartItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: ScreenHeight * 0.02, // Responsive margin
+    marginBottom: ScreenHeight * 0.02, 
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: ScreenWidth * 0.04,
   },
   productImage: {
-    width: ScreenWidth * 0.2, // Responsive image width
-    height: ScreenWidth * 0.2, // Responsive image height
+    width: ScreenWidth * 0.2,
+    height: ScreenWidth * 0.2, 
     borderRadius: 12,
-    marginRight: ScreenWidth * 0.04, // Responsive margin
+    marginRight: ScreenWidth * 0.04, 
   },
   itemDetails: {
     flex: 1,
   },
   productName: {
-    fontSize: ScreenWidth * 0.05, // Responsive font size
+    fontSize: ScreenWidth * 0.05,
     fontWeight: 'bold',
     color: '#333',
   },
   productPrice: {
-    fontSize: ScreenWidth * 0.045, // Responsive font size
+    fontSize: ScreenWidth * 0.045,
     color: '#888',
-    marginTop: ScreenHeight * 0.01, // Responsive margin
+    marginTop: ScreenHeight * 0.01, 
   },
   quantityContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: ScreenHeight * 0.02, // Responsive margin
+    marginTop: ScreenHeight * 0.02, 
   },
   quantityButton: {
     backgroundColor: '#007BFF',
     borderRadius: 50,
-    marginHorizontal: ScreenWidth * 0.03, // Responsive margin
+    marginHorizontal: ScreenWidth * 0.03, 
     height:ScreenHeight*0.04,
     width:ScreenHeight*0.04,
     justifyContent:'center',
     alignItems:'center'
   },
   quantityText: {
-    fontSize: 20, // Responsive font size
+    fontSize: 20,
     color: '#fff',
     textAlign:'center',
     fontWeight:'600'
   },
   removeButton: {
-    padding: ScreenWidth * 0.02, // Responsive padding
-    marginLeft: ScreenWidth * 0.03, // Responsive margin
+    padding: ScreenWidth * 0.02, 
+    marginLeft: ScreenWidth * 0.03, 
     backgroundColor: 'rgba(255, 0, 0, 0.1)',
     borderRadius: 8,
   },
   removeText: {
     color: '#FF4040',
-    fontSize: ScreenWidth * 0.04, // Responsive font size
+    fontSize: ScreenWidth * 0.04, 
     fontWeight: 'bold',
   },
   totalContainer: {
-    marginTop: ScreenHeight * 0.05, // Responsive margin
-    paddingTop: ScreenHeight * 0.02, // Responsive padding
-    paddingBottom: ScreenHeight * 0.02, // Responsive padding
+    marginTop: ScreenHeight * 0.05, 
+    paddingTop: ScreenHeight * 0.02, 
+    paddingBottom: ScreenHeight * 0.02, 
     borderTopWidth: 1,
     borderTopColor: '#ddd',
     alignItems: 'center',
@@ -175,21 +175,21 @@ const styles = StyleSheet.create({
 
   },
   totalText: {
-    fontSize: ScreenWidth * 0.06, // Responsive font size
+    fontSize: ScreenWidth * 0.06,
     fontWeight: 'bold',
     color: '#333',
   },
   checkoutButton: {
-    marginTop: ScreenHeight * 0.02, // Responsive margin
+    marginTop: ScreenHeight * 0.02, 
     backgroundColor: '#007BFF',
-    paddingVertical: ScreenHeight * 0.03, // Responsive padding
-    paddingHorizontal: ScreenWidth * 0.2, // Responsive padding
+    paddingVertical: ScreenHeight * 0.03, 
+    paddingHorizontal: ScreenWidth * 0.2, 
     borderRadius: 25,
-    marginBottom: ScreenHeight * 0.02, // Responsive margin
+    marginBottom: ScreenHeight * 0.02, 
   },
   checkoutText: {
     color: '#fff',
-    fontSize: ScreenWidth * 0.04, // Responsive font size
+    fontSize: ScreenWidth * 0.04, 
     fontWeight: 'bold',
   },
 });
