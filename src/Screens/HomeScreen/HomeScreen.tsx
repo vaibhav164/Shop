@@ -95,7 +95,6 @@ const HomeScreen = ({navigation}: HomScreenProps) => {
   );
   const onScrollEvent = (event: any) => {
     let scrollY = event.nativeEvent.contentOffset.y;
-    console.log('YYYY____', scrollY);
     Platform.OS == 'ios' && scrollY > 65
       ? setReduceModule(true)
       : Platform.OS == 'android' && scrollY > 1
