@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, FlatList, Pressable, Image, StyleSheet } from 'react-native'
 import SearchInput from '../../Components/SearchTextInput/SearchTextInput'
 import Container from '../../Components/Container/Container'
 import { itemList, ScreenHeight, ScreenWidth } from '../../Utils/Constant'
+import Icon from 'react-native-vector-icons/Entypo'
 
 
 export default function SearchScreen({navigation}) {
+  const [searchItem, setSearchItem] = useState<Object[]>(itemList);
+  const [inputValue, setSetInputValue] = useState('');
   const renderProductItem = ({item}) => (
     <Pressable onPress={()=>{navigation.navigate('ProductDetailScreen',{product:item})}} style={styles.productCard}>
       <Image source={{uri: item.image}} style={styles.productImage} />
@@ -15,17 +18,36 @@ export default function SearchScreen({navigation}) {
       </View>
     </Pressable>
   );
+  const handleChangeVlaue=(value)=>{
+    setSetInputValue(value)
+    if(value.length != 0){
+      let UpdateList = itemList.filter((item)=>{
+        if(item?.title?.slice(0,15)?.includes(value)){
+          return item
+        }
+      });
+      setSearchItem(UpdateList)
+    }else{
+      setSearchItem([])
+    }
+  }
   return (
     <Container>
-        <View>
-        <SearchInput closeIcon={true} />
+        <View style={{flex:1}}>
+        <SearchInput onchangeValue={handleChangeVlaue}/>
+        {inputValue.length > 0 ?
         <FlatList
-            data={itemList}
+            data={searchItem}
             renderItem={renderProductItem}
             keyExtractor={item => item.id}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.productList}
-          />
+          /> :
+            (<View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+                 <Icon name={'emoji-sad'} size={100} color={'#aaa'} />
+                 <Text style={{fontSize:15, fontWeight:'600', marginVertical:'5%'}}>{"Please Enter Something in SearchBar!"}</Text>
+            </View>)
+          }
           </View>
       </Container>
   )
