@@ -46,7 +46,8 @@ const CartScreen = () => {
   };
 
   const handleCheckout = () => {
-    Alert.alert('Proceeding to Checkout');
+    Alert.alert('Checking Out','Prodeed for Payment',[
+      {text: 'OK', onPress: () => {}}]);
   };
 
   return (
