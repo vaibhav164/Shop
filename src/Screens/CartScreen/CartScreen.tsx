@@ -96,11 +96,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F9F9F9',
-    padding: ScreenWidth * 0.04, // Padding is now responsive
+    padding: ScreenWidth * 0.04,
     paddingTop:'10%'
   },
   emptyCartText: {
-    fontSize: ScreenWidth * 0.05, // Responsive font size
+    fontSize: ScreenWidth * 0.05,
     color: '#444',
     textAlign: 'center',
     marginTop: ScreenHeight * 0.1,
@@ -108,46 +108,46 @@ const styles = StyleSheet.create({
   cartItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: ScreenHeight * 0.02, // Responsive margin
+    marginBottom: ScreenHeight * 0.02, 
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: ScreenWidth * 0.04,
   },
   productImage: {
-    width: ScreenWidth * 0.2, // Responsive image width
-    height: ScreenWidth * 0.2, // Responsive image height
+    width: ScreenWidth * 0.2, 
+    height: ScreenWidth * 0.2, 
     borderRadius: 12,
-    marginRight: ScreenWidth * 0.04, // Responsive margin
+    marginRight: ScreenWidth * 0.04, 
   },
   itemDetails: {
     flex: 1,
   },
   productName: {
-    fontSize: ScreenWidth * 0.05, // Responsive font size
+    fontSize: ScreenWidth * 0.05, 
     fontWeight: 'bold',
     color: '#333',
   },
   productPrice: {
-    fontSize: ScreenWidth * 0.045, // Responsive font size
+    fontSize: ScreenWidth * 0.045, 
     color: '#888',
-    marginTop: ScreenHeight * 0.01, // Responsive margin
+    marginTop: ScreenHeight * 0.01, 
   },
   quantityContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: ScreenHeight * 0.02, // Responsive margin
+    marginTop: ScreenHeight * 0.02, 
   },
   quantityButton: {
     backgroundColor: '#007BFF',
     borderRadius: 50,
-    marginHorizontal: ScreenWidth * 0.03, // Responsive margin
+    marginHorizontal: ScreenWidth * 0.03, 
     height:ScreenHeight*0.04,
     width:ScreenHeight*0.04,
     justifyContent:'center',
     alignItems:'center'
   },
   quantityText: {
-    fontSize: 20, // Responsive font size
+    fontSize: 20, 
     color: '#fff',
     textAlign:'center',
     fontWeight:'600'
