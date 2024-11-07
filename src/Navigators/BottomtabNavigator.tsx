@@ -7,6 +7,7 @@ import CartScreen from '../Screens/CartScreen/CartScreen';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
 import { Text, View } from 'react-native';
 import SearchScreen from '../Screens/SearchScreen/SearchScreen';
+import UserProfileScreen from '../Screens/User/UserDetailScreen';
 const Tab = createBottomTabNavigator();
 export default function BottomtabNavigator() {
   return (
@@ -58,7 +59,7 @@ export default function BottomtabNavigator() {
         <Tab.Screen options={{ headerShown: false }}  name="Home" component={HomeScreen} />
         <Tab.Screen options={{ headerShown: false }}  name="Cart" component={CartScreen} />
         <Tab.Screen options={{ headerShown: false }}  name="Search" component={SearchScreen} />
-        <Tab.Screen options={{ headerShown: false }}  name="Profile" component={PaymentScreen} />
+        <Tab.Screen options={{ headerShown: false }}  name="Profile" component={UserProfileScreen} />
       </Tab.Navigator>
   )
 }
