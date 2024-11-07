@@ -114,7 +114,7 @@ const HomeScreen = ({navigation}: HomScreenProps) => {
           contentContainerStyle={styles.productList}
           style={{backgroundColor:'#fff', marginTop:Platform.OS == 'android' && '10%', height:!reduceModule ?ScreenHeight*0.21:ScreenHeight*0.08}}
         />
-        <ScrollView onScroll={onScrollEvent} scrollEventThrottle={16}>
+        <ScrollView onScroll={onScrollEvent} showsVerticalScrollIndicator={false} scrollEventThrottle={16}>
           <Carousel
             loop
             width={viewportWidth}
