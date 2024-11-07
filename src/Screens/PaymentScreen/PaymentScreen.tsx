@@ -6,7 +6,7 @@ interface PaymentScreen {
 export default function PaymentScreen({navigation}:PaymentScreen) {
   return (
     <View>
-      <Text>PaymentScreen</Text>
+      <Text>{"PaymentScreen"}</Text>
       <Button
         title="Go to CartScreen"
         onPress={() => navigation.navigate('CartScreen')}
