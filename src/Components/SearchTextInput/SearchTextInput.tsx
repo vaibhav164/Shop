@@ -8,14 +8,19 @@ interface SearchInputProps {
   onFocus?:()=>void;
   onBlur?:()=> void;
   closeIcon?: boolean;
+  onchangeValue:(value:string)=>any;
 }
-const SearchInput = ({onFocus, onBlur, closeIcon}:SearchInputProps) => {
+const SearchInput = ({onFocus, onBlur, onchangeValue}:SearchInputProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [inputActive, setInputActive] = useState(false)
 const handleFocus =()=>{
   setSearchQuery('')
   setInputActive(true)
   if (onFocus) onFocus(); 
+}
+const handleChange = (text)=>{
+  setSearchQuery(text);
+  onchangeValue(text)
 }
   return (
     <View style={styles.container}>
@@ -25,23 +30,24 @@ const handleFocus =()=>{
           style={styles.input}
           placeholder="Search..."
           value={searchQuery}
-          onChangeText={setSearchQuery}
+          onChangeText={handleChange}
           onFocus={handleFocus}
           onBlur={onBlur}
           showSoftInputOnFocus={true}
         />
       </View>
-        {(inputActive && searchQuery.length) && <Cross onPress={()=>{setInputActive(false)}} name="closecircle" size={18} color="#aaa" style={styles.crossIcon} />}
+        {(inputActive || searchQuery.length) && <Cross onPress={()=>{setInputActive(false); setSearchQuery(''); onchangeValue('')}} name="closecircle" size={18} color="#aaa" style={styles.crossIcon} />}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     alignItems: 'center',
     height:ScreenHeight*0.07,
-    flexDirection:'row'
+    flexDirection:'row',
+    paddingHorizontal:'3%'
   },
   searchBox: {
     flexDirection: 'row',
@@ -53,10 +59,12 @@ const styles = StyleSheet.create({
     width: '90%',
     height:'80%',
     borderColor:'#e2e3e5',
-    borderWidth:1
+    borderWidth:1,
+    alignSelf:'flex-start'
   },
   crossIcon: {
-    alignSelf:'center'
+    alignSelf:'center',
+    marginBottom:'3%'
   },
   icon: {
     marginRight: 10,
