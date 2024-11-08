@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import apiDataReducer from './Slicer';
+import ProductListReducer from './ProductListSlice';
+import CartItemReducer from './ProductListSlice';
 
 const store = configureStore({
   reducer: {
-    apiData: apiDataReducer, 
+    productListData: ProductListReducer,
+    cartItemList:  CartItemReducer
   },
 });
 
