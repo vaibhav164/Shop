@@ -8,7 +8,7 @@ interface SearchInputProps {
   onFocus?:()=>void;
   onBlur?:()=> void;
   closeIcon?: boolean;
-  onchangeValue:(value:string)=>any;
+  onchangeValue?:(value:string)=>any;
 }
 const SearchInput = ({onFocus, onBlur, onchangeValue}:SearchInputProps) => {
   const [searchQuery, setSearchQuery] = useState('');
