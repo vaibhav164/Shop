@@ -18,7 +18,7 @@ import {Module} from '../../Utils/Constant';
 import SearchInput from '../../Components/SearchTextInput/SearchTextInput';
 import NeighbourHoodItems from '../../Components/NeighbourHoodSpecial/NeighbourHoodItems';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchData} from '../../Redux/Slicer';
+import {fetchData} from '../../Redux/ProductListSlice';
 import {useFocusEffect} from '@react-navigation/native';
 const banners = [
   {id: '1', image: 'https://picsum.photos/200/300'},
@@ -36,7 +36,7 @@ const HomeScreen = ({navigation}: HomScreenProps) => {
   }, [dispatch]);
   const [reduceModule, setReduceModule] = useState<Boolean>(false);
   const [activeModule, sestActiveModule] = useState<String>('');
-  const {data, loading, error} = useSelector(state => state.apiData);
+  const {data, loading, error} = useSelector(state => state.productListData);
 
   const renderBannerItem = ({item}) => (
     <View style={{marginHorizontal: '2%'}}>
