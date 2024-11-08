@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   Text,
   Image,
   FlatList,
   StyleSheet,
-  Dimensions,
   Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import Container from '../../Components/Container/Container';
@@ -17,38 +17,59 @@ import {itemList, ScreenHeight, ScreenWidth} from '../../Utils/Constant';
 import {Module} from '../../Utils/Constant';
 import SearchInput from '../../Components/SearchTextInput/SearchTextInput';
 import NeighbourHoodItems from '../../Components/NeighbourHoodSpecial/NeighbourHoodItems';
-const {width: viewportWidth} = Dimensions.get('window');
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchData} from '../../Redux/Slicer';
+import {useFocusEffect} from '@react-navigation/native';
 const banners = [
   {id: '1', image: 'https://picsum.photos/200/300'},
   {id: '2', image: 'https://picsum.photos/200/300'},
   {id: '3', image: 'https://picsum.photos/200/300'},
 ];
 
-
 interface HomScreenProps {
   navigation?: any;
 }
 const HomeScreen = ({navigation}: HomScreenProps) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
   const [reduceModule, setReduceModule] = useState<Boolean>(false);
-  const [activeModule, sestActiveModule] = useState<String>('')
+  const [activeModule, sestActiveModule] = useState<String>('');
+  const {data, loading, error} = useSelector(state => state.apiData);
 
   const renderBannerItem = ({item}) => (
     <View style={{marginHorizontal: '2%'}}>
       <Image source={{uri: item.image}} style={styles.bannerImage} />
     </View>
   );
-
   const renderProductItem = ({item}) => (
-    <Pressable onPress={()=>{navigation.navigate('ProductDetailScreen',{product:item})}} style={styles.productCard}>
+    <Pressable
+      onPress={() => {
+        navigation.navigate('ProductDetailScreen', {product: item});
+      }}
+      style={styles.productCard}>
       <Image source={{uri: item.image}} style={styles.productImage} />
-      <Text style={styles.productName}>{item.title.slice(0,30)}</Text>
+      <Text style={styles.productName}>{item.title.slice(0, 30)}</Text>
     </Pressable>
   );
 
   const renderModules = ({item}) => (
-    <Pressable onPress={()=>sestActiveModule(item.title)} style={[{ width: ScreenWidth*0.245}]}>
+    <Pressable
+      onPress={() => sestActiveModule(item.title)}
+      style={[{width: ScreenWidth * 0.245}]}>
       {!reduceModule ? (
-        <View style={{justifyContent:'space-between', alignItems:'center', borderWidth:1, borderColor:activeModule == item.title ?'#ff4f01':'#fff', marginHorizontal: '2%',borderRadius:5, backgroundColor:activeModule == item.title ? "#ff4f01": '#fff',paddingVertical:'10%'}}>
+        <View
+          style={{
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderWidth: 1,
+            borderColor: activeModule == item.title ? '#ff4f01' : '#fff',
+            marginHorizontal: '2%',
+            borderRadius: 5,
+            backgroundColor: activeModule == item.title ? '#ff4f01' : '#fff',
+            paddingVertical: '10%',
+          }}>
           <Image
             source={
               item.title == 'Exclusive'
@@ -66,26 +87,35 @@ const HomeScreen = ({navigation}: HomScreenProps) => {
               resizeMode: 'contain',
             }}
           />
-          <Text style={[
-              {fontSize: 16, fontWeight: 'bold', marginBottom:'0.5%'},
+          <Text
+            style={[
+              {fontSize: 16, fontWeight: 'bold', marginBottom: '0.5%'},
               {color: activeModule == item.title ? '#fff' : 'red'},
-            ]}>{item.title}</Text>
+            ]}>
+            {item.title}
+          </Text>
         </View>
       ) : (
         <View
           style={{
-            backgroundColor: activeModule == item.title ? '#ff4f01': '#fff',
+            backgroundColor: activeModule == item.title ? '#ff4f01' : '#fff',
             borderWidth: 1,
             marginHorizontal: '2%',
             alignItems: 'center',
             paddingVertical: '8%',
-            borderColor:activeModule == item.title ? '#ff4f01': '#fff',
-            borderRadius:5
+            borderColor: activeModule == item.title ? '#ff4f01' : '#fff',
+            borderRadius: 5,
           }}>
           <Text
             style={[
-              {fontSize: 16, fontWeight: 'bold',paddingBottom:'1%'},
-              {color: reduceModule ? activeModule == item.title ? '#fff' : 'red': 'red'},
+              {fontSize: 16, fontWeight: 'bold', paddingBottom: '1%'},
+              {
+                color: reduceModule
+                  ? activeModule == item.title
+                    ? '#fff'
+                    : 'red'
+                  : 'red',
+              },
             ]}>
             {item.title}
           </Text>
@@ -103,55 +133,80 @@ const HomeScreen = ({navigation}: HomScreenProps) => {
   };
   return (
     <Container>
-      <SafeAreaView style={{flex:1}}>
-        <FlatList
-          data={Module}
-          renderItem={renderModules}
-          keyExtractor={item => item.id}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.productList}
-          style={{backgroundColor:'#fff', marginTop:Platform.OS == 'android' && '10%', height:!reduceModule ?ScreenHeight*0.21:ScreenHeight*0.08}}
-        />
-        <ScrollView onScroll={onScrollEvent} showsVerticalScrollIndicator={false} scrollEventThrottle={16}>
-          <Carousel
-            loop
-            width={viewportWidth}
-            height={viewportWidth * 0.3}
-            autoPlay={false}
-            data={banners}
-            scrollAnimationDuration={1000}
-            onSnapToItem={index => console.log('current index:', index)}
-            renderItem={renderBannerItem}
-            style={{alignItems: 'center', justifyContent: 'center'}}
-          />
-          <SearchInput  onFocus={()=>{navigation.navigate('Search')}}/>
-          <NeighbourHoodItems />
-          <FlatList
-            data={[...itemList].reverse()}
-            renderItem={renderProductItem}
-            keyExtractor={item => item.id}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.productList}
-          />
-          <FlatList
-            data={itemList}
-            renderItem={renderProductItem}
-            keyExtractor={item => item.id}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.productList}
-          />
-          <FlatList
-            data={[...itemList].reverse()}
-            renderItem={renderProductItem}
-            keyExtractor={item => item.id}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.productList}
-          />
-        </ScrollView>
+      <SafeAreaView style={{flex: 1}}>
+        {loading ? (
+          <View
+            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+            <ActivityIndicator size="large" color="#ff4f01" />{' '}
+          </View>
+        ) : (
+          data && (
+          data &&
+          <>
+              <FlatList
+                data={Module}
+                renderItem={renderModules}
+                keyExtractor={item => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.productList}
+                style={{
+                  backgroundColor: '#fff',
+                  marginTop: Platform.OS == 'android' && '10%',
+                  height: !reduceModule
+                    ? ScreenHeight * 0.21
+                    : ScreenHeight * 0.08,
+                }}
+              />
+              <ScrollView
+                onScroll={onScrollEvent}
+                showsVerticalScrollIndicator={false}
+                scrollEventThrottle={16}>
+                <Carousel
+                  loop
+                  width={ScreenWidth}
+                  height={ScreenWidth * 0.3}
+                  autoPlay={false}
+                  data={banners}
+                  scrollAnimationDuration={1000}
+                  onSnapToItem={index => console.log('current index:', index)}
+                  renderItem={renderBannerItem}
+                  style={{alignItems: 'center', justifyContent: 'center'}}
+                />
+                <SearchInput
+                  onFocus={() => {
+                    navigation.navigate('Search');
+                  }}
+                />
+                <NeighbourHoodItems />
+                <FlatList
+                  data={[...data].reverse()}
+                  renderItem={renderProductItem}
+                  keyExtractor={item => item.id}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.productList}
+                />
+                <FlatList
+                  data={data}
+                  renderItem={renderProductItem}
+                  keyExtractor={item => item.id}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.productList}
+                />
+                <FlatList
+                  data={[...data].reverse()}
+                  renderItem={renderProductItem}
+                  keyExtractor={item => item.id}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.productList}
+                />
+              </ScrollView>
+            </>
+          )
+        )}
       </SafeAreaView>
     </Container>
   );
