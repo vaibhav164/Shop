@@ -14,7 +14,7 @@ export default function BottomtabNavigator() {
     <Tab.Navigator screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
-        if (route.name === 'HomeScreen') {
+        if (route.name === 'Home') {
           iconName = 'home';
           color =  focused ? '#ff4f01' : '#acabb1' 
           size = focused ? 25 : 20
@@ -35,7 +35,7 @@ export default function BottomtabNavigator() {
       },
       tabBarLabel: ({ focused, color }) => {
         let size
-        {if (route.name === 'HomeScreen') {
+        {if (route.name === 'Home') {
           color =  focused ? '#ff4f01' : '#acabb1' 
         } else if (route.name === 'Search') {
           color =  focused ? '#ff4f01' : '#acabb1' 
@@ -56,7 +56,7 @@ export default function BottomtabNavigator() {
       },
     })}
     >
-        <Tab.Screen options={{ headerShown: false }}  name="HomeScreen" component={HomeScreen} />
+        <Tab.Screen options={{ headerShown: false }}  name="Home" component={HomeScreen} />
         <Tab.Screen options={{ headerShown: false }}  name="Cart" component={CartScreen} />
         <Tab.Screen options={{ headerShown: false }}  name="Search" component={SearchScreen} />
         <Tab.Screen options={{ headerShown: false }}  name="Profile" component={UserProfileScreen} />
