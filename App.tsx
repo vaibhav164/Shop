@@ -5,12 +5,13 @@ import ProductDetailScreen from './src/Screens/ProductDetailScreen/ProductDetail
 import PaymentScreen from './src/Screens/PaymentScreen/PaymentScreen';
 import CartScreen from './src/Screens/CartScreen/CartScreen';
 import BottomtabNavigator from './src/Navigators/BottomtabNavigator';
-
-
+import { Provider } from 'react-redux'
+import store from './src/Redux/Store';
 
 function App(): React.JSX.Element {
   const Stack = createNativeStackNavigator();
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen  name="Home" component={BottomtabNavigator} />
@@ -19,6 +20,7 @@ function App(): React.JSX.Element {
         <Stack.Screen  name="CartScreen" component={CartScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
 
