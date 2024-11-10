@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { FETCH_PRODUCTS_FAILURE, FETCH_PRODUCTS_REQUEST, FETCH_PRODUCTS_SUCCESS } from '../constants';
+
 const fetchProductsRequest = () => ({ type: FETCH_PRODUCTS_REQUEST });
 const fetchProductsSuccess = (products) => ({ type: FETCH_PRODUCTS_SUCCESS, payload: products });
 const fetchProductsFailure = (error) => ({ type: FETCH_PRODUCTS_FAILURE, payload: error });
