@@ -54,6 +54,7 @@ Now that you have successfully run the app, let's modify it.
 2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
 
    For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+<<<<<<< HEAD
 
 ## Congratulations! :tada:
 
@@ -88,3 +89,5 @@ To learn more about React Native, take a look at the following resources:
 ### Product Detail Screen
 ![HomeScreen](./src/Assets/Screenshots/Product1.png?raw=true "HomeScreen")
 ![HomeScreen](./src/Assets/Screenshots/Product2.png?raw=true "HomeScreen")
+=======
+>>>>>>> 0f50e9f02558ca48cbaf36f447ed592eb22db9b9
