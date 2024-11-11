@@ -135,7 +135,7 @@ export default function ProductDetailScreen({
               {isExpanded ? 'View Less' : 'View More'}
             </Text>
           </Text>
-          <ShopButton title="Add to Cart" onPress={handleAddToCart} />
+          <ShopButton disabled={quantity==0} title="Add to Cart" onPress={handleAddToCart} />
         </View>
       </ScrollView>
     </SafeAreaView>
