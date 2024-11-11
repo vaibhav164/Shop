@@ -3,7 +3,7 @@ import { View, Text, FlatList, Pressable, Image, StyleSheet } from 'react-native
 import SearchInput from '../../Components/SearchTextInput/SearchTextInput'
 import Container from '../../Components/Container/Container'
 import { itemList, ScreenHeight, ScreenWidth } from '../../Utils/Constant'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 export default function SearchScreen({navigation}) {
@@ -44,7 +44,7 @@ export default function SearchScreen({navigation}) {
             contentContainerStyle={styles.productList}
           /> :
             (<View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-                 <Icon name={'null'} size={100} color={'#aaa'} />
+                 <Icon name={'trash-bin'} size={100} color={'#aaa'} />
                  <Text style={{fontSize:15, fontWeight:'600', marginVertical:'5%'}}>{"Please Enter Something in SearchBar!"}</Text>
             </View>)
           }

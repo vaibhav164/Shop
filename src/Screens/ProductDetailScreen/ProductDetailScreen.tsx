@@ -13,6 +13,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {ScreenWidth} from '../../Utils/Constant';
 import Carousel from 'react-native-reanimated-carousel';
 import ShopButton from '../../Components/Button/Button';
+import IconStars from 'react-native-vector-icons/MaterialIcons';
+import {addMultipleQuantityToCart, addToCart} from '../../Redux/CartItemsSlice';
+import { useDispatch } from 'react-redux';
 interface ProductDetailScreenProps {
   navigation: any;
   route: any;
@@ -24,13 +27,15 @@ export default function ProductDetailScreen({
   const {product} = route.params;
   const [isExpanded, setIsExpanded] = useState(false);
   const [quantity, setQuantity] = useState(0);
+  const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    navigation.navigate('CartScreen', {
-      quantity: quantity,
-      product: product.name,
-    });
-    console.log(`Added ${quantity} of ${product.name} to the cart`);
+    if(quantity > 1){
+      dispatch(addMultipleQuantityToCart({product:product, quantity: quantity}));
+    }else if(quantity == 1){
+      dispatch(addToCart(product));
+    }
+    navigation.navigate('CartScreen');
   };
   const toggleText = () => {
     setIsExpanded(!isExpanded);
@@ -43,6 +48,22 @@ export default function ProductDetailScreen({
     if (quantity > 0) {
       setQuantity(prev => prev - 1);
     }
+  };
+
+  const renderRatingStars = (rating: number) => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        stars.push(
+          <IconStars key={i} name="star" size={20} color="#FFD700" />
+        );
+      } else {
+        stars.push(
+          <IconStars key={i} name="star-border" size={20} color="#FFD700" />
+        );
+      }
+    }
+    return stars;
   };
   const renderBannerItem = ({item}) => (
     <Image source={{uri: item}} style={styles.productImage} />
@@ -70,6 +91,14 @@ export default function ProductDetailScreen({
       />
       <View style={{paddingHorizontal: '6%'}}>
         <Text style={styles.productTitle}>{product.title}</Text>
+        <View style={styles.ratingContainer}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            {renderRatingStars(product.rating.rate)}
+            <Text style={styles.ratingText}>
+              ({product.rating.rate} / 5) • {product.rating.ratingCount}reviews
+            </Text>
+          </View>
+        </View>
         <View
           style={{
             flexDirection: 'row',
@@ -179,4 +208,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  ratingContainer: {
+    marginVertical: 10,
+  },
+  ratingText: {
+    fontSize: 16,
+    color: '#888',
+    marginLeft: 8,
+  }
 });

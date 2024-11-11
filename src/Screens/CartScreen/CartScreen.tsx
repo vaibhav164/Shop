@@ -1,32 +1,23 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet, Alert, Dimensions, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet, Alert, Dimensions, SafeAreaView, Pressable } from 'react-native';
 import ShopButton from '../../Components/Button/Button';
 import { ScreenHeight, ScreenWidth } from '../../Utils/Constant';
-
-
-const CartScreen = () => {
-  const [cartItems, setCartItems] = useState([
-    { id: '1', name: 'Product 1', price: 20, quantity: 1, image: 'https://via.placeholder.com/100' },
-    { id: '2', name: 'Product 2', price: 40, quantity: 2, image: 'https://via.placeholder.com/100' },
-    { id: '3', name: 'Product 3', price: 15, quantity: 1, image: 'https://via.placeholder.com/100' },
-    { id: '3', name: 'Product 3', price: 15, quantity: 1, image: 'https://via.placeholder.com/100' },
-    { id: '3', name: 'Product 3', price: 15, quantity: 1, image: 'https://via.placeholder.com/100' },
-    { id: '3', name: 'Product 3', price: 15, quantity: 1, image: 'https://via.placeholder.com/100' },
-    { id: '3', name: 'Product 3', price: 15, quantity: 1, image: 'https://via.placeholder.com/100' },
-    { id: '3', name: 'Product 3', price: 15, quantity: 1, image: 'https://via.placeholder.com/100' },
-  ]);
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useSelector } from 'react-redux';
+import { removeFromCart, updateCartQuantity } from '../../Redux/CartItemsSlice';
+const CartScreen = ({navigation}) => {
+  const cart = useSelector((state: any) => state.cartItemList.cart);
+  const [cartItems, setCartItems] = useState(cart);
   const calculateTotal = () => {
     return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
-
   const increaseQuantity = (id) => {
     const updatedCart = cartItems.map(item => 
       item.id === id ? { ...item, quantity: item.quantity + 1 } : item
     );
     setCartItems(updatedCart);
   };
-
+  
   const decreaseQuantity = (id) => {
     const updatedCart = cartItems.map(item => 
       item.id === id && item.quantity > 0 ? { ...item, quantity: item.quantity - 1 } : item
@@ -44,7 +35,6 @@ const CartScreen = () => {
       ]
     );
   };
-
   const handleCheckout = () => {
     Alert.alert('Checking Out','Prodeed for Payment',[
       {text: 'OK', onPress: () => {}}]);
@@ -52,18 +42,38 @@ const CartScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Pressable onPress={() => navigation.goBack()} style={{padding: '5%'}}>
+        <Icon
+          onPress={() => navigation.navigate('Home')}
+          name="arrow-back"
+          size={20}
+          color="#aaa"
+          style={{color: 'black'}}
+        />
+      </Pressable>
       {cartItems.length === 0 ? (
         <Text style={styles.emptyCartText}>Your cart is empty</Text>
       ) : (
+        <>
+        <Pressable onPress={() => navigation.goBack()} style={{padding: '5%'}}>
+        <Icon
+          onPress={() => navigation.goBack()}
+          name="arrow-back"
+          size={20}
+          color="#aaa"
+          style={{color: 'black'}}
+        />
+      </Pressable>
         <FlatList
           data={cartItems}
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
+          renderItem={({ item }) => {
+            return(
             <View style={styles.cartItem}>
               <Image source={{ uri: item.image }} style={styles.productImage} />
               <View style={styles.itemDetails}>
-                <Text style={styles.productName}>{item.name}</Text>
+                <Text style={styles.productName}>{item?.title}</Text>
                 <Text style={styles.productPrice}>${item.price}</Text>
                 <View style={styles.quantityContainer}>
                   <TouchableOpacity onPress={() => decreaseQuantity(item.id)} style={styles.quantityButton}>
@@ -75,12 +85,13 @@ const CartScreen = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <TouchableOpacity onPress={() => removeItem(item.id)} style={styles.removeButton}>
+              <TouchableOpacity onPress={() => removeItem(item.id)} disabled={cartItems.length == 0} style={styles.removeButton}>
                 <Text style={styles.removeText}>Remove</Text>
               </TouchableOpacity>
             </View>
-          )}
+      )}}
         />
+        </>
       )}
 
       {cartItems.length > 0 && (
@@ -165,7 +176,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   totalContainer: {
-    marginTop: ScreenHeight * 0.05, 
     paddingTop: ScreenHeight * 0.02, 
     paddingBottom: ScreenHeight * 0.02, 
     borderTopWidth: 1,
