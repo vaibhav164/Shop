@@ -55,15 +55,6 @@ const CartScreen = ({navigation}) => {
         <Text style={styles.emptyCartText}>Your cart is empty</Text>
       ) : (
         <>
-        <Pressable onPress={() => navigation.goBack()} style={{padding: '5%'}}>
-        <Icon
-          onPress={() => navigation.goBack()}
-          name="arrow-back"
-          size={20}
-          color="#aaa"
-          style={{color: 'black'}}
-        />
-      </Pressable>
         <FlatList
           data={cartItems}
           keyExtractor={item => item.id}
